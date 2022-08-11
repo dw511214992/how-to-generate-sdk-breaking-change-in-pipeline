@@ -31,7 +31,7 @@ So, a new approach is proposed.
 ![](imgs/propose.drawio.png)
 
 In the proposed workflow, we need to generate sdk twice in sdk automation pipeline, and then we can get the sdk breaking change
-caused by the spec PR. We also can generate the breaking change by comparing to previous released sdk, which can be used in generated sdk PR.
+caused by the spec PR. We also can generate the breaking change by comparing to previous released sdk, which can be used in generated sdk PR. All the functionality is in sdk automation pipeline.
 
 ### Effort Estimation
 
