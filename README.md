@@ -21,7 +21,7 @@ From the workflow, we can find the whole sdk breaking change related functionali
 which means we strongly depend on the pipeline bot. So, this workflow has the following drawbacks:
 1. It's hard to reuse in other pipeline. If we want to have the sdk breaking change detection feature outside the spec unified pipeline, it's not achievable.
 2. Pipeline Bot needs to compare the previous breaking change and new generated breaking change. It a string comparison, so the result
-maybe uncontrolled. (__Please refer to the [appendix](#generate-sdk-breaking-change-which-is-not-approved-before-by-string-comparison) to get more details about string comparison)
+maybe uncontrolled. (_Please refer to the [appendix](#generate-sdk-breaking-change-which-is-not-approved-before-by-string-comparison) to get more details about string comparison_)
 
 ## Proposed Approach
 
