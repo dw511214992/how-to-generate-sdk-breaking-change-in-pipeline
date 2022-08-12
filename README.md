@@ -15,13 +15,13 @@ and show you some drawbacks of current approach. Finally, I will propose a new a
 
 ![](imgs/unified.drawio.png)
 
-_To make you better understand the workflow, some details are ignroed in the workflow._
+_To make you better understand the workflow, some details are ignored in the workflow._
 
 From the workflow, we can find the whole sdk breaking change related functionalities are in __Pipeline Bot__ and __SDK Automation Pipeline__,
 which means we strongly depend on the pipeline bot. So, this workflow has the following drawbacks:
 1. It's hard to reuse in other pipeline. If we want to have the sdk breaking change detection feature outside the spec unified pipeline, it's not achievable.
 2. Pipeline Bot needs to compare the previous breaking change and new generated breaking change. It a string comparison, so the result
-maybe uncontrolled.
+maybe uncontrolled. (__Please refer to the [appendix](#generate-sdk-breaking-change-which-is-not-approved-before-by-string-comparison) to get more details about string comparison)
 
 ## Proposed Approach
 
@@ -44,3 +44,25 @@ caused by the spec PR. We also can generate the breaking change by comparing to 
 | Support the proposed workflow in PYTHON SDK                        | 5                                                                                                                                                                                       |
 | Support the proposed workflow in JAVA SDK                          | 5? (If java sdk has breaking change generation tool, the effort will be 5. Otherwise, the effort cannot be estimated now because sdk owner needs to investigate how to implement it.)   |
 | Support the proposed workflow in .Net SDK                          | 5? (If .Net sdk has breaking change generation tool, the effort will be 5. Otherwise, the effort cannot be estimated now because sdk owner needs to investigate how to implement it.)   |                                                                                                                        |
+
+
+# Appendix
+## Generate SDK Breaking Change which is not approved before by String Comparison
+It's not friendly to show all SDK breaking changes in spec PR because the SDK breaking change maybe introduced by previous spec PR.
+So, pipeline bot compares the generated SDK breaking change in sdk automation pipeline with previous approved breaking change to find the diff.
+Finally, there will be only non-approved sdk breaking change shown in spec PR.
+
+Following is an example of comparison:
+1. Previous approved sdk breaking change stored in pipeline bot database:
+   ```
+   +	Model IpAddress no longer has parameter dns_name_label_reuse_policy
+   ```
+2. New generated sdk breaking change in sdk automation pipeline:
+   ```
+   +	Model IpAddress no longer has parameter dns_name_label_reuse_policy
+   +	Model IpRoute no longer has parameter target
+   ```
+3. After comparison, pipeline bot shows the following breaking change in spec PR:
+   ```
+   +	Model IpRoute no longer has parameter target
+   ```
